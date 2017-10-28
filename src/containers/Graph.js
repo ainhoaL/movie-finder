@@ -17,13 +17,13 @@ export class Graph extends Component {
         network.on('click', (params) => {
             switch (params.nodes[0]) {
                 case 'Actors':
-                    return this.props.fetchActors(this.props.activeMovie);
+                    return this.props.fetchActors(this.props.activeMovie, this.props.baseUrl);
                 case 'Director':
-                    return this.props.fetchDirector(this.props.activeMovie);
+                    return this.props.fetchDirector(this.props.activeMovie, this.props.baseUrl);
                 case 'Screenplay':
-                    return this.props.fetchScreenplay(this.props.activeMovie);
+                    return this.props.fetchScreenplay(this.props.activeMovie, this.props.baseUrl);
                 case 'Novel':
-                    return this.props.fetchNovel(this.props.activeMovie);
+                    return this.props.fetchNovel(this.props.activeMovie, this.props.baseUrl);
                 default:
                     return;
             }

@@ -7,13 +7,13 @@ export default function(state = {}, action) {
         case SELECT_MOVIE:
             return newMovieGraph(action.payload);
         case FETCH_ACTORS:
-            return addCast(state, action.payload.cast); //action.payload.id movie id
+            return addCast(state, action.payload.cast, action.meta.imageBaseUrl); //action.payload.id movie id
         case FETCH_DIRECTOR:
-            return addRole(state, action.payload.crew, 'Director');
+            return addRole(state, action.payload.crew, 'Director', action.meta.imageBaseUrl);
         case FETCH_SCREENPLAY:
-            return addRole(state, action.payload.crew, 'Screenplay');
+            return addRole(state, action.payload.crew, 'Screenplay', action.meta.imageBaseUrl);
         case FETCH_NOVEL:
-            return addRole(state, action.payload.crew, 'Novel');
+            return addRole(state, action.payload.crew, 'Novel', action.meta.imageBaseUrl);
         default:
             return state;
     }
@@ -41,7 +41,7 @@ function newMovieGraph(movie) {
     return createGraphData(nodes, edges);
 }
 
-function addCast(graphData, cast) {
+function addCast(graphData, cast, imageBaseUrl) {
     let nodes = graphData.nodes.get();
     let edges = graphData.edges.get();
     let nodesLookup = datasetLookup(nodes);
@@ -51,7 +51,7 @@ function addCast(graphData, cast) {
     let i = 0;
     while( i < 6 && i < cast.length) {
         if(!nodesLookup[cast[i].id]) {
-            castNodes.push({ id: cast[i].id, label: cast[i].name});
+            castNodes.push({ id: cast[i].id, label: cast[i].name, shape: 'circularImage', image: imageBaseUrl + 'w45' + cast[i].profile_path});
         }
         castEdges.push({ from: 'Actors', to: cast[i].id});
         i++;
@@ -63,7 +63,7 @@ function addCast(graphData, cast) {
     return createGraphData(newNodes, newEdges);
 }
 
-function addRole(graphData, crew, role) {
+function addRole(graphData, crew, role, imageBaseUrl) {
     let nodes = graphData.nodes.get();
     let edges = graphData.edges.get();
     let nodesLookup = datasetLookup(nodes);
@@ -73,7 +73,7 @@ function addRole(graphData, crew, role) {
     for(let i = 0; i < crew.length; i++) {
         if (crew[i].job === role) {
             if(!nodesLookup[crew[i].id]) {
-                roleNodes.push({ id: crew[i].id, label: crew[i].name});
+                roleNodes.push({ id: crew[i].id, label: crew[i].name, shape: 'circularImage', image: imageBaseUrl + 'w45' + crew[i].profile_path});
             }
             roleEdges.push({ from: role, to: crew[i].id});
         }

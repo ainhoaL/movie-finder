@@ -1,6 +1,6 @@
 import fetchJsonp from 'fetch-jsonp';
 
-const api_key = "b0e6a01a317502c04ea95104643af378";
+const api_key;
 
 export const FETCH_MOVIES = 'FETCH_MOVIES';
 export const SELECT_MOVIE = 'SELECT_MOVIE';
@@ -27,46 +27,58 @@ export function selectMovie(movie) {
     };
 }
 
-export function fetchActors(movie) {
+export function fetchActors(movie, baseUrl) {
     let requestPromise = fetchJsonp('https://api.themoviedb.org/3/movie/' + movie.id + '/credits?api_key=' + api_key).then((response) => {
             return response.json();
         });
 
     return {
         type: FETCH_ACTORS,
-        payload: requestPromise
+        payload: requestPromise,
+        meta: {
+            imageBaseUrl: baseUrl
+        }
     };
 }
 
-export function fetchDirector(movie) {
+export function fetchDirector(movie, baseUrl) {
     let requestPromise = fetchJsonp('https://api.themoviedb.org/3/movie/' + movie.id + '/credits?api_key=' + api_key).then((response) => {
             return response.json();
         });
 
     return {
         type: FETCH_DIRECTOR,
-        payload: requestPromise
+        payload: requestPromise,
+        meta: {
+            imageBaseUrl: baseUrl
+        }
     };
 }
 
-export function fetchScreenplay(movie) {
+export function fetchScreenplay(movie, baseUrl) {
     let requestPromise = fetchJsonp('https://api.themoviedb.org/3/movie/' + movie.id + '/credits?api_key=' + api_key).then((response) => {
             return response.json();
         });
 
     return {
         type: FETCH_SCREENPLAY,
-        payload: requestPromise
+        payload: requestPromise,
+        meta: {
+            imageBaseUrl: baseUrl
+        }
     };
 }
 
-export function fetchNovel(movie) {
+export function fetchNovel(movie, baseUrl) {
     let requestPromise = fetchJsonp('https://api.themoviedb.org/3/movie/' + movie.id + '/credits?api_key=' + api_key).then((response) => {
             return response.json();
         });
 
     return {
         type: FETCH_NOVEL,
-        payload: requestPromise
+        payload: requestPromise,
+        meta: {
+            imageBaseUrl: baseUrl
+        }
     };
 }

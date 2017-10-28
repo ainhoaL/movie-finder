@@ -34,7 +34,7 @@ class App extends Component {
         </div>
         <div className="container-fluid">
         <div className="row">
-          <Graph />
+          <Graph baseUrl={this.state.baseUrl} />
           <div className="col">
             <MoviesSearchBar />
             <MovieList baseUrl={this.state.baseUrl} />
